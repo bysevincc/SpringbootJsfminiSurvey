@@ -1,0 +1,175 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head><title> Anket Toplama Merkezi </title></h:head>
+<style>
+.tbl
+{
+	//border: 10px solid green;
+	border-collapse: collapse;
+}
+.tds
+{
+	width:128px;;
+	height:72px;
+	border: 2px solid black;	
+}
+td#newtbl{
+width:64px;;
+height:36px;
+background:#e5f1f4;}
+.redbutton {
+float:right
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 5px 15px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+.button3 {background-color: #f44336;
+  margin-top: 8px;
+  margin-left: 1100px;
+  width: 130px;
+  height: 30px;} /* Red */ 
+body{
+margin:0;
+padding:0;
+background: white;
+}
+nav{
+width:100% ;
+background:#333;
+overflow:auto;
+}
+ul {
+padding:0;
+margin:0 0 0 150px;
+list-style:none;
+}
+li{
+float:left;
+}
+.logo img{
+position:absolute;
+margin-top:7px;
+margin-left:5px;
+}
+nav a{
+width:200px;
+display:block;
+padding:20px 30px;
+text-decoration:none;
+font-family:Arial;
+text-align:center;
+color: white;}
+nav a:hover{
+transition:0.5s;
+text-transform:uppercase;
+}
+.trash img {
+max-width: 150px;
+margin-top:100px;
+margin-left:10000px;
+}
+</style>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script> 
+
+<script  src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js"></script> 
+<body>
+
+<nav>
+	<ul>
+		<li><a href="index.xhtml"> Tuttuğunuz Futbol Takımı Anketi </a> </li>
+		
+		<li><a href="index_2.xhtml"> Hayatınızdan Memnun musunuz Anketi</a> </li>
+		
+		
+	</ul>
+	
+</nav>
+<f:view>
+	<h:form>
+		<h:panelGrid columns="2">
+		
+		Ad:<p:inputText value="#{helloBean.form.ad}"></p:inputText>
+		Soyad:<p:inputText value="#{helloBean.form.soyad}"></p:inputText>
+		Cinsiyet: <p:selectOneRadio value="#{helloBean.form.cinsiyet}">
+		<f:selectItem itemLabel="Bay" itemValue="0"/>
+		<f:selectItem itemLabel="Bayan" itemValue="1"/>
+		</p:selectOneRadio>
+		Dogum Tarihi: <p:calendar id="popup" value="#{helloBean.form.dogumtarihi}" />	
+		Tuttugu Takim <p:selectOneMenu value="#{helloBean.form.tuttuguTakim}">
+				<f:selectItem itemLabel="Galatasaray" itemValue="Galatasaray"></f:selectItem>
+				<f:selectItem itemLabel="FenerBahçe" itemValue="FenerBahçe"></f:selectItem>
+				<f:selectItem itemLabel="Besiktas" itemValue="Besiktas"></f:selectItem>
+				<f:selectItem itemLabel="Trabzonspor" itemValue="Trabzonspor"></f:selectItem>
+		</p:selectOneMenu>
+		
+		<h:commandButton action="#{helloBean.kaydet()}" value="Kaydet"
+		rendered="#{helloBean.form.ad==null}"/>
+		<h:commandButton action="#{helloBean.duzenle()}" value="Duzenle"
+		rendered="#{helloBean.form.ad!=null}"/>
+		
+			</h:panelGrid>
+			
+	</h:form>
+	
+	
+	<h:form>
+	
+	<p:dataTable value="#{helloBean.liste}" var="cls">
+	<f:facet name="header" >Anket Listesi</f:facet>,
+	<p:column>>
+		<f:facet name="header">Sec</f:facet>
+	<h:commandLink value="Sec">
+	<f:setPropertyActionListener value="#{cls}" target="#{helloBean.form}"/>
+	</h:commandLink>
+	</p:column>
+	<p:column>
+	<f:facet name="header">Sil</f:facet>
+	
+	<h:commandLink action="#{helloBean.sil()}" value="Sil">
+	<f:setPropertyActionListener value="#{cls}" target="#{helloBean.form}"/>
+	</h:commandLink>
+	</p:column>
+	
+	<p:column>
+	<f:facet name="header">Ad</f:facet>
+	<h:outputText value="#{cls.ad}" />
+	</p:column>
+<p:column>
+	<f:facet name="header">Soyad</f:facet>
+	<h:outputText value="#{cls.soyad}" />
+	</p:column>
+<p:column>
+	<f:facet name="header">Cinsiyet</f:facet>
+	<h:outputText value="#{cls.cinsiyet}" />
+	</p:column>
+	
+	<p:column>
+	<f:facet name="header">Dogum Tarihi</f:facet>
+	<h:outputText value="#{cls.dogumtarihi}" />
+	</p:column>
+	
+	<p:column>
+	<f:facet name="header">Tuttugu Takim</f:facet>
+	<h:outputText value="#{cls.tuttuguTakim}" />
+	</p:column>
+	
+	
+	</p:dataTable>
+	
+	</h:form>
+	</f:view>
+</body>
+</html>
